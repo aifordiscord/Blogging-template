@@ -1,12 +1,76 @@
 [build]
+  # Build command for the React frontend
   command = "npm run build"
-  publish = "client/dist"
+  # Directory where the built files are output
+  publish = "dist/public"
+  # Node.js version
+  environment = { NODE_VERSION = "20" }
 
-[dev]
-  command = "npm run dev"
-  targetPort = 5173
+[build.environment]
+  # Environment variables for build process
+  NODE_ENV = "production"
 
+# Redirect all routes to index.html for client-side routing (SPA)
 [[redirects]]
   from = "/*"
-  to = "client/index.html"
+  to = "/index.html"
   status = 200
+  # Don't redirect API calls or assets
+  conditions = {Role = ["spa"]}
+
+# Handle API routes if you decide to add serverless functions later
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# Security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://www.googleapis.com https://securetoken.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://*.cloudfunctions.net wss://*.firebaseio.com; frame-src 'self' https://*.firebaseapp.com"
+
+# Cache static assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache fonts
+[[headers]]
+  for = "/*.woff2"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Preload key resources
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Link = '''</assets/index.css>; rel=preload; as=style,
+              </assets/index.js>; rel=preload; as=script'''
+
+# Functions directory (if you add serverless functions later)
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Dev server settings for local development
+[dev]
+  command = "npm run dev"
+  port = 5000
+  publish = "dist/public"
+  autoLaunch = false
+
+# Environment variables that need to be set in Netlify dashboard
+# VITE_FIREBASE_API_KEY
+# VITE_FIREBASE_PROJECT_ID  
+# VITE_FIREBASE_APP_ID
+
+# Edge functions (if needed for advanced features)
+# [edge_functions]
+#   path = "/api/edge/*"
+#   function = "edge-handler"

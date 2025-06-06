@@ -1,5 +1,5 @@
 
-# BlogHub - Advanced Blogging Platform
+# Ai for discord - Advanced Blogging page made using Ai like chatgpt4o deepseek and cloude sonnet4
 
 A modern, feature-rich blogging platform built with React, TypeScript, Tailwind CSS, and Firebase. Create, manage, and publish blogs with an intuitive admin panel, rich text editing, and SEO optimization.
 
@@ -273,7 +273,7 @@ Test your rules in Firebase Console:
 ## 📁 Project Structure
 
 ```
-BlogHub/
+Aifords-blog/
 ├── client/                 # Frontend React app
 │   ├── src/
 │   │   ├── components/     # Reusable components

@@ -171,6 +171,9 @@ export default function BlogPost() {
             {/* Blog Content */}
             <div className="prose prose-lg dark:prose-invert max-w-none mb-8">
               <ReactMarkdown
+                rehypePlugins={[]}
+                remarkPlugins={[]}
+                skipHtml={false}
                 components={{
                   code({ node, inline, className, children, ...props }: any) {
                     const match = /language-(\w+)/.exec(className || '');

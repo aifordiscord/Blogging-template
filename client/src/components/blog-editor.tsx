@@ -476,7 +476,9 @@ export function BlogEditor({ blog, onSave, onCancel }: BlogEditorProps) {
                       </div>
                     </div>
                     <div className="prose prose-lg dark:prose-invert max-w-none">
-                      <ReactMarkdown>{formData.content || "Blog content will appear here..."}</ReactMarkdown>
+                      <ReactMarkdown skipHtml={false}>
+                        {formData.content || "Blog content will appear here..."}
+                      </ReactMarkdown>
                     </div>
                   </div>
                 </CardContent>

@@ -3,11 +3,9 @@
   command = "npm run build"
   # Directory where the built files are output
   publish = "dist/public"
-  # Node.js version
-  environment = { NODE_VERSION = "20" }
 
 [build.environment]
-  # Environment variables for build process
+  NODE_VERSION = "20"
   NODE_ENV = "production"
 
 # Redirect all routes to index.html for client-side routing (SPA)
@@ -16,7 +14,7 @@
   to = "/index.html"
   status = 200
   # Don't redirect API calls or assets
-  conditions = {Role = ["spa"]}
+  conditions = { Role = ["spa"] }
 
 # Handle API routes if you decide to add serverless functions later
 [[redirects]]
@@ -69,8 +67,3 @@
 # VITE_FIREBASE_API_KEY
 # VITE_FIREBASE_PROJECT_ID  
 # VITE_FIREBASE_APP_ID
-
-# Edge functions (if needed for advanced features)
-# [edge_functions]
-#   path = "/api/edge/*"
-#   function = "edge-handler"

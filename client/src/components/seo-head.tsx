@@ -10,8 +10,8 @@ interface SeoHeadProps {
 }
 
 export function SeoHead({ blog, title, description, image, url }: SeoHeadProps) {
-  const siteTitle = "BlogHub";
-  const siteDescription = "A modern blogging platform for sharing ideas, insights, and stories";
+  const siteTitle = "Afds blog";
+  const siteDescription = "Ai for discord blog get latest blogs about discord bots and ai";
   const siteUrl = window.location.origin;
 
   const pageTitle = blog?.metaTitle || blog?.title || title || siteTitle;

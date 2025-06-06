@@ -52,8 +52,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <SeoHead 
-        title="BlogHub - Modern Blogging Platform"
-        description="Discover amazing stories, tutorials, and insights from passionate writers around the world"
+        title="Ai for discord blog"
+        description="Get latest updates about discord and bots and Ai "
       />
       
       <Header onAdminClick={() => setShowAdminModal(true)} />
@@ -146,7 +146,7 @@ export default function Home() {
                     <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
                   </svg>
                 </div>
-                <span className="text-xl font-bold">BlogHub</span>
+                <span className="text-xl font-bold">Ai for discord blogs</span>
               </div>
               <p className="text-gray-400 mb-4">
                 A modern blogging platform for sharing ideas, insights, and stories with the world.
@@ -156,16 +156,16 @@ export default function Home() {
             <div>
               <h4 className="font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">Home</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Blogs</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">About</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Discord</a></li>
+                <li><a href="https://discord.gg/yGzD5jVFMz" className="hover:text-white transition-colors">Blogs</a></li>
+                <li><a href="https://discord.gg/yGzD5jVFMz" className="hover:text-white transition-colors">About</a></li>
               </ul>
             </div>
             
             <div>
               <h4 className="font-semibold mb-4">Categories</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">Technology</a></li>
+                <li><a href="https://discord.gg/yGzD5jVFMz" className="hover:text-white transition-colors">Technology</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Design</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Business</a></li>
               </ul>
@@ -173,7 +173,7 @@ export default function Home() {
           </div>
           
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2023 BlogHub. All rights reserved.</p>
+            <p>&copy; 2025 Ai for discord. All rights reserved.</p>
           </div>
         </div>
       </footer>

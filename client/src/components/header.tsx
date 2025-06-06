@@ -23,7 +23,7 @@ export function Header({ onAdminClick }: HeaderProps) {
                     <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
                   </svg>
                 </div>
-                <span className="text-xl font-bold text-gray-900 dark:text-white">BlogHub</span>
+                <span className="text-xl font-bold text-gray-900 dark:text-white">Aifor-dsblog</span>
               </div>
             </div>
           </Link>

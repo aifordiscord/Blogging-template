@@ -81,9 +81,22 @@ export function BlogEditor({ blog, onSave, onCancel }: BlogEditorProps) {
     }
 
     const blogData: InsertBlog = {
-      ...formData,
+      title: formData.title,
+      excerpt: formData.excerpt,
+      content: formData.content,
+      thumbnail: formData.thumbnail,
+      category: formData.category,
+      tags: formData.tags,
+      published: formData.published,
+      featured: formData.featured,
+      readTime: formData.readTime,
+      authorName: formData.authorName,
+      authorAvatar: formData.authorAvatar,
+      authorBio: formData.authorBio,
+      publishedAt: formData.publishedAt,
       metaTitle: formData.metaTitle || formData.title,
-      metaDescription: formData.metaDescription || formData.excerpt
+      metaDescription: formData.metaDescription || formData.excerpt,
+      seoKeywords: formData.seoKeywords
     };
 
     if (blog) {

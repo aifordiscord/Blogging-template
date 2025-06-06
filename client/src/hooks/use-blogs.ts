@@ -122,6 +122,7 @@ export function useCreateBlog() {
           ...blogData,
           createdAt: now,
           updatedAt: now,
+          publishedAt: blogData.published ? now : now, // Set publishedAt when created
           views: 0,
           likes: 0,
           slug: blogData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
@@ -150,10 +151,20 @@ export function useUpdateBlog() {
   return useMutation({
     mutationFn: async ({ id, ...updateData }: UpdateBlog & { id: string }) => {
       const docRef = doc(db, BLOGS_COLLECTION, id);
-      await updateDoc(docRef, {
+      const now = new Date().toISOString();
+      
+      // If the blog is being published for the first time, set publishedAt
+      const updatePayload: any = {
         ...updateData,
-        updatedAt: new Date().toISOString()
-      });
+        updatedAt: now
+      };
+      
+      // If publishing the blog, update publishedAt
+      if (updateData.published === true) {
+        updatePayload.publishedAt = now;
+      }
+      
+      await updateDoc(docRef, updatePayload);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["blogs"] });

@@ -23,41 +23,60 @@ export function useBlogs(category?: string, searchQuery?: string) {
   return useQuery({
     queryKey: ["blogs", category, searchQuery],
     queryFn: async () => {
-      const blogsRef = collection(db, BLOGS_COLLECTION);
-      
-      // Get all blogs first, then filter for published ones
-      const snapshot = await getDocs(blogsRef);
-      let blogs = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as Blog[];
+      try {
+        const blogsRef = collection(db, BLOGS_COLLECTION);
+        
+        // Get all blogs from Firestore
+        const snapshot = await getDocs(blogsRef);
+        console.log("Total blogs fetched from Firestore:", snapshot.docs.length);
+        
+        let blogs = snapshot.docs.map(doc => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            ...data
+          };
+        }) as Blog[];
 
-      // Filter for published blogs
-      blogs = blogs.filter(blog => blog.published === true);
+        console.log("All blogs:", blogs);
 
-      // Sort by publishedAt if available, otherwise by createdAt
-      blogs.sort((a, b) => {
-        const aDate = a.publishedAt || a.createdAt;
-        const bDate = b.publishedAt || b.createdAt;
-        return new Date(bDate).getTime() - new Date(aDate).getTime();
-      });
+        // Filter for published blogs only
+        blogs = blogs.filter(blog => {
+          const isPublished = blog.published === true;
+          console.log(`Blog "${blog.title}" - Published: ${isPublished}`);
+          return isPublished;
+        });
 
-      // Filter by category if specified
-      if (category && category !== "All Posts") {
-        blogs = blogs.filter(blog => blog.category === category);
+        console.log("Published blogs:", blogs.length);
+
+        // Sort by publishedAt if available, otherwise by createdAt
+        blogs.sort((a, b) => {
+          const aDate = a.publishedAt || a.createdAt || a.updatedAt;
+          const bDate = b.publishedAt || b.createdAt || b.updatedAt;
+          return new Date(bDate).getTime() - new Date(aDate).getTime();
+        });
+
+        // Filter by category if specified
+        if (category && category !== "All Posts") {
+          blogs = blogs.filter(blog => blog.category === category);
+        }
+
+        // Filter by search query if specified
+        if (searchQuery) {
+          blogs = blogs.filter(blog => 
+            blog.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            blog.excerpt?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            blog.content?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            (blog.tags && blog.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())))
+          );
+        }
+
+        console.log("Final filtered blogs:", blogs);
+        return blogs;
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+        throw error;
       }
-
-      // Filter by search query if specified
-      if (searchQuery) {
-        blogs = blogs.filter(blog => 
-          blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          blog.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          blog.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          blog.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-        );
-      }
-
-      return blogs;
     },
   });
 }

@@ -24,24 +24,28 @@ export function useBlogs(category?: string, searchQuery?: string) {
     queryKey: ["blogs", category, searchQuery],
     queryFn: async () => {
       const blogsRef = collection(db, BLOGS_COLLECTION);
+      
+      // Create base query for published blogs, ordered by createdAt as fallback
       let q = query(
         blogsRef,
         where("published", "==", true),
-        orderBy("publishedAt", "desc")
+        orderBy("createdAt", "desc")
       );
 
-      if (category && category !== "All Posts") {
-        q = query(q, where("category", "==", category));
-      }
-
       const snapshot = await getDocs(q);
-      const blogs = snapshot.docs.map(doc => ({
+      let blogs = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       })) as Blog[];
 
+      // Filter by category if specified
+      if (category && category !== "All Posts") {
+        blogs = blogs.filter(blog => blog.category === category);
+      }
+
+      // Filter by search query if specified
       if (searchQuery) {
-        return blogs.filter(blog => 
+        blogs = blogs.filter(blog => 
           blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
           blog.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
           blog.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -122,12 +126,13 @@ export function useCreateBlog() {
           ...blogData,
           createdAt: now,
           updatedAt: now,
-          publishedAt: blogData.published ? now : now, // Set publishedAt when created
+          publishedAt: blogData.published ? now : null, // Only set publishedAt if published
           views: 0,
           likes: 0,
           slug: blogData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
           metaTitle: blogData.metaTitle || blogData.title,
-          metaDescription: blogData.metaDescription || blogData.excerpt
+          metaDescription: blogData.metaDescription || blogData.excerpt,
+          published: blogData.published || false // Ensure published field is always set
         });
         
         console.log("Blog created successfully with ID:", docRef.id);

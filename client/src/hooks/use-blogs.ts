@@ -28,7 +28,6 @@ export function useBlogs(category?: string, searchQuery?: string) {
         
         // Get all blogs from Firestore
         const snapshot = await getDocs(blogsRef);
-        console.log("Total blogs fetched from Firestore:", snapshot.docs.length);
         
         let blogs = snapshot.docs.map(doc => {
           const data = doc.data();
@@ -38,16 +37,8 @@ export function useBlogs(category?: string, searchQuery?: string) {
           };
         }) as Blog[];
 
-        console.log("All blogs:", blogs);
-
         // Filter for published blogs only
-        blogs = blogs.filter(blog => {
-          const isPublished = blog.published === true;
-          console.log(`Blog "${blog.title}" - Published: ${isPublished}`);
-          return isPublished;
-        });
-
-        console.log("Published blogs:", blogs.length);
+        blogs = blogs.filter(blog => blog.published === true);
 
         // Sort by publishedAt if available, otherwise by createdAt
         blogs.sort((a, b) => {
@@ -71,13 +62,18 @@ export function useBlogs(category?: string, searchQuery?: string) {
           );
         }
 
-        console.log("Final filtered blogs:", blogs);
         return blogs;
       } catch (error) {
-        console.error("Error fetching blogs:", error);
+        // Silently handle permission errors and return empty array
+        if (error && typeof error === 'object' && 'code' in error && error.code === 'permission-denied') {
+          return [];
+        }
+        // For other errors, still throw them
         throw error;
       }
     },
+    retry: false, // Don't retry on permission errors
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes to reduce requests
   });
 }
 

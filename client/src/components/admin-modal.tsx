@@ -45,7 +45,7 @@ export function AdminModal({ open, onOpenChange, onSuccess }: AdminModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md" aria-describedby="admin-login-description">
         <DialogHeader>
           <div className="flex items-center justify-center mb-4">
             <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-emerald-500 rounded-full flex items-center justify-center">
@@ -53,7 +53,7 @@ export function AdminModal({ open, onOpenChange, onSuccess }: AdminModalProps) {
             </div>
           </div>
           <DialogTitle className="text-center">Admin Access</DialogTitle>
-          <p className="text-center text-gray-600 dark:text-gray-400">
+          <p id="admin-login-description" className="text-center text-gray-600 dark:text-gray-400">
             Sign in to manage your blog content
           </p>
         </DialogHeader>

@@ -79,12 +79,12 @@ export function AdminPanel({ onClose }: AdminPanelProps) {
         onSave={() => {
           setShowEditor(false);
           setEditingBlog(null);
-          setActiveTab("dashboard");
+          setActiveTab("blogs");
         }}
         onCancel={() => {
           setShowEditor(false);
           setEditingBlog(null);
-          setActiveTab("dashboard");
+          setActiveTab("blogs");
         }}
       />
     );

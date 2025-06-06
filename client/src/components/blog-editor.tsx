@@ -108,20 +108,22 @@ export function BlogEditor({ blog, onSave, onCancel }: BlogEditorProps) {
           });
           onSave();
         },
-        onError: () => {
+        onError: (error: any) => {
+          console.error("Blog update error:", error);
           toast({
             title: "Error",
-            description: "Failed to update blog",
+            description: error?.message || "Failed to update blog",
             variant: "destructive",
           });
         }
       });
     } else {
       createBlog.mutate(blogData, {
-        onSuccess: () => {
+        onSuccess: (blogId) => {
+          console.log("Blog created successfully with ID:", blogId);
           toast({
             title: "Success",
-            description: "Blog created successfully",
+            description: "Blog created successfully! It will appear in the blog list shortly.",
           });
           onSave();
         },
@@ -129,7 +131,7 @@ export function BlogEditor({ blog, onSave, onCancel }: BlogEditorProps) {
           console.error("Blog creation error:", error);
           toast({
             title: "Error",
-            description: error?.message || "Failed to create blog",
+            description: error?.message || "Failed to create blog. Please try again.",
             variant: "destructive",
           });
         }

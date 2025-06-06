@@ -112,21 +112,29 @@ export function useCreateBlog() {
   
   return useMutation({
     mutationFn: async (blogData: InsertBlog) => {
-      const now = new Date().toISOString();
-      const blogsRef = collection(db, BLOGS_COLLECTION);
-      
-      const docRef = await addDoc(blogsRef, {
-        ...blogData,
-        createdAt: now,
-        updatedAt: now,
-        views: 0,
-        likes: 0,
-        slug: blogData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-        metaTitle: blogData.metaTitle || blogData.title,
-        metaDescription: blogData.metaDescription || blogData.excerpt
-      });
-      
-      return docRef.id;
+      try {
+        console.log("Creating blog with data:", blogData);
+        
+        const now = new Date().toISOString();
+        const blogsRef = collection(db, BLOGS_COLLECTION);
+        
+        const docRef = await addDoc(blogsRef, {
+          ...blogData,
+          createdAt: now,
+          updatedAt: now,
+          views: 0,
+          likes: 0,
+          slug: blogData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+          metaTitle: blogData.metaTitle || blogData.title,
+          metaDescription: blogData.metaDescription || blogData.excerpt
+        });
+        
+        console.log("Blog created successfully with ID:", docRef.id);
+        return docRef.id;
+      } catch (error) {
+        console.error("Error creating blog:", error);
+        throw error;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["blogs"] });

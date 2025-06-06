@@ -112,10 +112,11 @@ export function BlogEditor({ blog, onSave, onCancel }: BlogEditorProps) {
           });
           onSave();
         },
-        onError: () => {
+        onError: (error: any) => {
+          console.error("Blog creation error:", error);
           toast({
             title: "Error",
-            description: "Failed to create blog",
+            description: error?.message || "Failed to create blog",
             variant: "destructive",
           });
         }

@@ -28,6 +28,7 @@ export const blogSchema = z.object({
 
 export const insertBlogSchema = blogSchema.omit({
   id: true,
+  slug: true,
   views: true,
   likes: true,
   createdAt: true,

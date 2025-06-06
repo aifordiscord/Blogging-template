@@ -8,11 +8,7 @@
   "framework": null,
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
-    },
-    {
-      "source": "/((?!api).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ],
@@ -69,11 +65,7 @@
       "NODE_VERSION": "20"
     }
   },
-  "functions": {
-    "app/api/*.ts": {
-      "runtime": "nodejs20.x"
-    }
-  },
+
   "regions": ["iad1"],
   "github": {
     "autoAlias": false

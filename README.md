@@ -4,7 +4,7 @@
 A modern, feature-rich blogging platform built with React, TypeScript, Tailwind CSS, and Firebase. Create, manage, and publish blogs with an intuitive admin panel, rich text editing, and SEO optimization.
 # website preview & links
 [![Join our Discord](https://img.shields.io/badge/Join_Our_Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/yGzD5jVFMz)
-[![Visit Website](https://img.shields.io/badge/🌐_aifordiscord.xyz-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://aifordiscord.xyz)
+[![Website preview ](https://img.shields.io/badge/🌐_aifordiscord.xyz-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://blog.aifordiscord.xyz)
 ## ✨ Features
 
 ### 🎨 Frontend Features
